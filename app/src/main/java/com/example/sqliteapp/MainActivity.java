@@ -3,6 +3,7 @@ package com.example.sqliteapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     EditText txtId, txtNombre, txtCorreo;
-    Button btnGuardar, btnMostrar, btnActualizar, btnBorrar;
+    Button btnGuardar, btnMostrar, btnActualizar, btnBorrar, btnIrProductos;
     TextView txtResultado;
 
     DatabaseHelper dbHelper;
@@ -32,9 +33,18 @@ public class MainActivity extends AppCompatActivity {
         btnMostrar = findViewById(R.id.btnMostrar);
         btnActualizar = findViewById(R.id.btnActualizar);
         btnBorrar = findViewById(R.id.btnBorrar);
+        btnIrProductos = findViewById(R.id.btnIrProductos);
         txtResultado = findViewById(R.id.txtResultado);
 
         dbHelper = new DatabaseHelper(this);
+
+        btnIrProductos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProductosActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // BOTÓN MOSTRAR (Consultar)
         btnMostrar.setOnClickListener(new View.OnClickListener() {

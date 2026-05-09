@@ -7,57 +7,51 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/txtId"
-        android:hint="ID del usuario a actualizar"
+        android:id="@+id/txtIdProd"
+        android:hint="ID del producto (para actualizar/borrar)"
         android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:id="@+id/txtNombre"
-        android:hint="Nombre"
+        android:id="@+id/txtNombreProd"
+        android:hint="Nombre del Producto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:id="@+id/txtCorreo"
-        android:hint="Correo"
+        android:id="@+id/txtPrecioProd"
+        android:hint="Precio"
+        android:inputType="numberDecimal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/btnGuardar"
-        android:text="Guardar"
+        android:id="@+id/btnGuardarProd"
+        android:text="Guardar Producto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Button
-        android:id="@+id/btnMostrar"
-        android:text="Mostrar Usuarios"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
-    <Button
-        android:id="@+id/btnActualizar"
-        android:text="Actualizar usuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
-    <Button
-        android:id="@+id/btnBorrar"
-        android:text="Borrar usuario"
+        android:id="@+id/btnMostrarProd"
+        android:text="Mostrar Productos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"/>
 
     <Button
-        android:id="@+id/btnIrProductos"
-        android:text="Ir a Productos"
-        android:backgroundTint="#4CAF50"
-        android:textColor="#FFFFFF"
+        android:id="@+id/btnActualizarProd"
+        android:text="Actualizar Producto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/btnBorrarProd"
+        android:text="Borrar Producto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -65,7 +59,7 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:id="@+id/txtResultado"
+            android:id="@+id/txtResultadoProd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp" />

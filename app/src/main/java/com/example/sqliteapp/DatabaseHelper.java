@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "empresa.db";
 
     // Versión
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Constructor
     public DatabaseHelper(Context context) {
@@ -26,13 +26,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "correo TEXT)";
 
         db.execSQL(sql);
+
+        String sql2 = "CREATE TABLE productos (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ProdNombre TEXT," +
+                "Precio FLOAT)";
+
+        db.execSQL(sql2);
     }
+    
 
     // Actualización
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS usuarios");
+        db.execSQL("DROP TABLE IF EXISTS productos");
         onCreate(db);
     }
 
