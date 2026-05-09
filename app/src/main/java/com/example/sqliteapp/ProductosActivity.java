@@ -64,12 +64,25 @@ public class ProductosActivity extends AppCompatActivity {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
 
-                String id = txtIdProd.getText().toString();
-                String nombre = txtNombreProd.getText().toString();
-                String precio = txtPrecioProd.getText().toString();
+                String id = txtIdProd.getText().toString().trim();
+                String nombre = txtNombreProd.getText().toString().trim();
+                String precio = txtPrecioProd.getText().toString().trim();
 
                 if (id.isEmpty()) {
-                    Toast.makeText(ProductosActivity.this, "Ingresa un ID", Toast.LENGTH_SHORT).show();
+                    txtIdProd.setError("Ingresa el ID");
+                    txtIdProd.requestFocus();
+                    return;
+                }
+
+                if (nombre.isEmpty()) {
+                    txtNombreProd.setError("Nombre requerido");
+                    txtNombreProd.requestFocus();
+                    return;
+                }
+
+                if (precio.isEmpty()) {
+                    txtPrecioProd.setError("Precio requerido");
+                    txtPrecioProd.requestFocus();
                     return;
                 }
 
@@ -96,10 +109,11 @@ public class ProductosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-                String id = txtIdProd.getText().toString();
+                String id = txtIdProd.getText().toString().trim();
 
                 if (id.isEmpty()) {
-                    Toast.makeText(ProductosActivity.this, "Ingresa un ID", Toast.LENGTH_SHORT).show();
+                    txtIdProd.setError("Ingresa el ID");
+                    txtIdProd.requestFocus();
                     return;
                 }
 
@@ -118,11 +132,25 @@ public class ProductosActivity extends AppCompatActivity {
         btnGuardarProd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String nombre = txtNombreProd.getText().toString().trim();
+                String precioStr = txtPrecioProd.getText().toString().trim();
+
+                if (nombre.isEmpty()) {
+                    txtNombreProd.setError("Nombre requerido");
+                    txtNombreProd.requestFocus();
+                    return;
+                }
+
+                if (precioStr.isEmpty()) {
+                    txtPrecioProd.setError("Precio requerido");
+                    txtPrecioProd.requestFocus();
+                    return;
+                }
+
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
 
-                values.put("ProdNombre", txtNombreProd.getText().toString());
-                String precioStr = txtPrecioProd.getText().toString();
+                values.put("ProdNombre", nombre);
                 try {
                     float precioFloat = Float.parseFloat(precioStr);
                     values.put("Precio", precioFloat);
@@ -135,6 +163,7 @@ public class ProductosActivity extends AppCompatActivity {
                 Toast.makeText(ProductosActivity.this, "Producto guardado", Toast.LENGTH_SHORT).show();
                 txtNombreProd.setText("");
                 txtPrecioProd.setText("");
+                txtNombreProd.requestFocus();
             }
         });
     }

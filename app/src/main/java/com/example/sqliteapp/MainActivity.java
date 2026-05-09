@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText txtId, txtNombre, txtCorreo;
+    EditText txtId, txtNombre, txtCorreo, txtTelefono;
     Button btnGuardar, btnMostrar, btnActualizar, btnBorrar, btnIrProductos;
     TextView txtResultado;
 
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         txtId = findViewById(R.id.txtId);
         txtNombre = findViewById(R.id.txtNombre);
         txtCorreo = findViewById(R.id.txtCorreo);
+        txtTelefono = findViewById(R.id.txtTelefono);
         btnGuardar = findViewById(R.id.btnGuardar);
         btnMostrar = findViewById(R.id.btnMostrar);
         btnActualizar = findViewById(R.id.btnActualizar);
@@ -58,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
                     int id = cursor.getInt(0);
                     String nombre = cursor.getString(1);
                     String correo = cursor.getString(2);
+                    String telefono = cursor.getString(3);
                     stringBuilder.append("ID: ").append(id)
                             .append(" - ").append(nombre)
-                            .append(" (").append(correo).append(")\n");
+                            .append(" (").append(correo).append(") - ")
+                            .append(telefono).append("\n");
                 }
                 cursor.close();
                 txtResultado.setText(stringBuilder.toString());
@@ -71,30 +74,47 @@ public class MainActivity extends AppCompatActivity {
         btnActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                ContentValues values = new ContentValues();
-
-                String id = txtId.getText().toString();
-                String nombre = txtNombre.getText().toString();
-                String correo = txtCorreo.getText().toString();
+                String id = txtId.getText().toString().trim();
+                String nombre = txtNombre.getText().toString().trim();
+                String correo = txtCorreo.getText().toString().trim();
+                String telefono = txtTelefono.getText().toString().trim();
 
                 if (id.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Ingresa un ID para actualizar", Toast.LENGTH_SHORT).show();
+                    txtId.setError("Ingresa el ID");
+                    txtId.requestFocus();
                     return;
                 }
 
+                if (nombre.isEmpty()) {
+                    txtNombre.setError("Nombre requerido");
+                    txtNombre.requestFocus();
+                    return;
+                }
+
+                if (correo.isEmpty()) {
+                    txtCorreo.setError("Correo requerido");
+                    txtCorreo.requestFocus();
+                    return;
+                }
+
+                if (telefono.isEmpty()) {
+                    txtTelefono.setError("Teléfono requerido");
+                    txtTelefono.requestFocus();
+                    return;
+                }
+
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
                 values.put("nombre", nombre);
                 values.put("correo", correo);
+                values.put("telefono", telefono);
 
-                int filasAfectadas = db.update("usuarios",
-                        values,
-                        "id=?",
-                        new String[]{id});
+                int filasAfectadas = db.update("usuarios", values, "id=?", new String[]{id});
 
                 if (filasAfectadas > 0) {
-                    Toast.makeText(MainActivity.this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Usuario actualizado", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "No se encontró el ID: " + id, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "No se encontró el ID: " + id, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -129,22 +149,41 @@ public class MainActivity extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String nombre = txtNombre.getText().toString().trim();
+                String correo = txtCorreo.getText().toString().trim();
+                String telefono = txtTelefono.getText().toString().trim();
+
+                if (nombre.isEmpty()) {
+                    txtNombre.setError("Nombre requerido");
+                    txtNombre.requestFocus();
+                    return;
+                }
+                if (correo.isEmpty()) {
+                    txtCorreo.setError("Correo requerido");
+                    txtCorreo.requestFocus();
+                    return;
+                }
+                if (telefono.isEmpty()) {
+                    txtTelefono.setError("Teléfono requerido");
+                    txtTelefono.requestFocus();
+                    return;
+                }
 
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
-
                 ContentValues values = new ContentValues();
 
-                values.put("nombre", txtNombre.getText().toString());
-                values.put("correo", txtCorreo.getText().toString());
+                values.put("nombre", nombre);
+                values.put("correo", correo);
+                values.put("telefono", telefono);
 
                 db.insert("usuarios", null, values);
 
-                Toast.makeText(MainActivity.this,
-                        "Usuario guardado",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Usuario guardado con éxito", Toast.LENGTH_LONG).show();
 
                 txtNombre.setText("");
                 txtCorreo.setText("");
+                txtTelefono.setText("");
+                txtNombre.requestFocus();
             }
         });
     }

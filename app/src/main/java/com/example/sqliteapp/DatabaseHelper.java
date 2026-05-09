@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "empresa.db";
 
     // Versión
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Constructor
     public DatabaseHelper(Context context) {
@@ -23,7 +23,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sql = "CREATE TABLE usuarios (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nombre TEXT," +
-                "correo TEXT)";
+                "correo TEXT," +
+                "telefono TEXT)";
 
         db.execSQL(sql);
 
